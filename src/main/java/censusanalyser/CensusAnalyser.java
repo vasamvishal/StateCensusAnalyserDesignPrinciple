@@ -19,7 +19,6 @@ public class CensusAnalyser {
         this.censusList = new ArrayList<IndiaCensussDAO>();
     }
 
-
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
@@ -51,7 +50,7 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(),
                     e.type.name());
         } catch (RuntimeException e){
-            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_CLASS);
+            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.HEADER_EXCEPTION);
         }
     }
 

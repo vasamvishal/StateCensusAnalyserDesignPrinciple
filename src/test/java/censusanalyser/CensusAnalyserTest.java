@@ -36,6 +36,17 @@ public class CensusAnalyserTest {
     public void givenIndianCensusData_ShouldReturnExactCount() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
+            int noOfStateCode = censusAnalyser.loadIndiaStateCode(WRONG_CSV_FILE_PATH);
+            Assert.assertEquals(37, noOfStateCode);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA,e.type);
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_ShouldReturnException() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
             int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_FILE_PATH);
             Assert.assertEquals(37, noOfStateCode);
         } catch (CensusAnalyserException e) {

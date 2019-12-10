@@ -40,7 +40,7 @@ public class CensusAnalyserTest {
             int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIA_CENSUS_CSV_FILE_PATH);
             Assert.assertEquals(37, noOfStateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CLASS,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
         }
     }
 
@@ -51,7 +51,7 @@ public class CensusAnalyserTest {
             int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_FILE_PATH);
             Assert.assertEquals(37, noOfStateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CLASS,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
         }
     }
 
@@ -62,7 +62,7 @@ public class CensusAnalyserTest {
             int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIANCENSUSDATA_DELIMITER_FILE_PATH);
             Assert.assertEquals(37, noOfStateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CLASS,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
         }
     }
 
@@ -73,7 +73,7 @@ public class CensusAnalyserTest {
             int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIANCENSUSDATA_DELIMITER_FILE_PATH);
             Assert.assertEquals(37, noOfStateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CLASS,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
         }
     }
 
@@ -106,7 +106,7 @@ public class CensusAnalyserTest {
             int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIA_CENSUS_CSV_FILE_PATH);
             Assert.assertEquals(37, noOfStateCode);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CLASS,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
         }
     }
 

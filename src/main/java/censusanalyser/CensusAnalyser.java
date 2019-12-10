@@ -50,6 +50,8 @@ public class CensusAnalyser {
         } catch (CSVBuilderException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     e.type.name());
+        } catch (RuntimeException e){
+            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_CLASS);
         }
     }
 

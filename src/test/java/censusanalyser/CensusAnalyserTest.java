@@ -98,7 +98,18 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA,e.type);
         }
     }
-    
+
+    @Test
+    public void givenIndianStateCode_ForWrongClass_ShouldThrowException() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            int noOfStateCode = censusAnalyser.loadIndiaStateCode(INDIA_CENSUS_CSV_FILE_PATH);
+            Assert.assertEquals(37, noOfStateCode);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CLASS,e.type);
+        }
+    }
+
     @Test
     public void givenIndianData_WhenSortedOnState_ShouldReturnSortedOutput()  {
         try {

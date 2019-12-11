@@ -1,6 +1,9 @@
 package censusanalyser;
 
 import com.google.gson.Gson;
+import csvbuilderanalyser.CSVBuilderException;
+import csvbuilderanalyser.CSVBuilderFactory;
+import csvbuilderanalyser.ICSVBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -59,12 +62,6 @@ public class CensusAnalyser {
         } catch (RuntimeException e){
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.HEADER_EXCEPTION);
         }
-    }
-
-    private <E> int getCount(Iterator<E> censusCSVIterator) {
-        Iterable<E> csvIterable = () -> censusCSVIterator;
-        int numOfEateries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
-        return numOfEateries;
     }
 
     public String getStateWiseSortedCensusData() throws CensusAnalyserException {

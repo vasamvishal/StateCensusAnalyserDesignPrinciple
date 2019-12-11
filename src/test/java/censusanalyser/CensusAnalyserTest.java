@@ -1,6 +1,8 @@
 package censusanalyser;
 
 import com.google.gson.Gson;
+import csvbuilderanalyser.CSVBuilderFactory;
+import csvbuilderanalyser.ICSVBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

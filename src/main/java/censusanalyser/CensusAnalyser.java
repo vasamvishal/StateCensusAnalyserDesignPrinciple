@@ -16,7 +16,7 @@ public class CensusAnalyser {
     List<IndiaCensussDAO> censusList = null;
 
     public CensusAnalyser() {
-        this.censusList = new ArrayList<IndiaCensussDAO>();
+        this.censusList = new ArrayList();
     }
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
@@ -24,11 +24,11 @@ public class CensusAnalyser {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<IndiaCensusCSV> censusCsvIterator = csvBuilder.
                     getCSVFileIterator(reader, IndiaCensusCSV.class);
-            while (censusCsvIterator.hasNext()) {
-                this.censusList.add(new IndiaCensussDAO(censusCsvIterator.next()));
-            }
+            Iterable<IndiaCensusCSV> csvIterable = () -> censusCsvIterator;
+            StreamSupport.stream(csvIterable.spliterator(),false).forEach(censusCsv ->censusList.add(new IndiaCensussDAO(censusCsv)));
             return censusList.size();
-        } catch (IOException e) {
+        }
+         catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         } catch (CSVBuilderException e) {

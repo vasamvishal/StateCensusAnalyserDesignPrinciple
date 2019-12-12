@@ -181,7 +181,7 @@ public class CensusAnalyserTest {
     public void givenUsCensusData_ShouldReturnCensusData() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            int noOfStateCode = censusAnalyser.loadIndiaCensusData(US_CENSUS_FILE_PATH);
+            int noOfStateCode = censusAnalyser.loadUSCensusDataCode(US_CENSUS_FILE_PATH);
             Assert.assertEquals(51, noOfStateCode);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);

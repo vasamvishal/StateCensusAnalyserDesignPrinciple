@@ -16,6 +16,10 @@ import java.util.stream.StreamSupport;
 import static censusanalyser.CensusAnalyserException.*;
 
 public class CensusAnalyser {
+
+    public enum COUNTRY{
+        INDIA,US
+    }
     Map<String, CensussDAO> censusStateMap = null;
 
 
@@ -23,13 +27,8 @@ public class CensusAnalyser {
         this.censusStateMap = new HashMap<>();
     }
 
-    public int loadIndiaCensusData(String ... csvFilePath) throws CensusAnalyserException {
-        Map<String, CensussDAO> censusStateMap= new censusLoader().loadCensusData(IndiaCensusCSV.class,csvFilePath);
-        return censusStateMap.size();
-    }
-
-    public int loadUSCensusDataCode(String ... csvFilePath) throws CensusAnalyserException {
-        Map<String, CensussDAO> censusStateMap = new censusLoader().loadCensusData(USCensusCsv.class,csvFilePath);
+    public int loadCensusDataCode(COUNTRY country, String...csvFilePath) throws CensusAnalyserException {
+        Map<String, CensussDAO> censusStateMap = new censusLoader().loadCensusData(country, csvFilePath);
         return censusStateMap.size();
     }
 

@@ -48,6 +48,17 @@ public class censusLoader {
         return censusStateMap;
     }
 
+    public <E> Map<String, CensussDAO> loadCensusData(CensusAnalyser.COUNTRY country, String ... csvFilePath) throws CensusAnalyserException {
+        if(country.equals(CensusAnalyser.COUNTRY.INDIA)){
+            return this.loadCensusData(IndiaCensusCSV.class,csvFilePath);
+        }
+        else if (country.equals(CensusAnalyser.COUNTRY.US)){
+            return this.loadCensusData(USCensusCsv.class,csvFilePath);
+        }
+        throw new CensusAnalyserException("Enter proper Country name", CensusAnalyserException.ExceptionType.INCORRECT_COUNTRY);
+
+    }
+
     private int loadIndiaStateCode(Map<String, CensussDAO> censusStateMap, String indiaStateCodeFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(indiaStateCodeFilePath))) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();

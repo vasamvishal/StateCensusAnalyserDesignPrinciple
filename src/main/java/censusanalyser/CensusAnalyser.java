@@ -1,17 +1,9 @@
 package censusanalyser;
 
 import com.google.gson.Gson;
-import csvbuilderanalyser.CSVBuilderException;
-import csvbuilderanalyser.CSVBuilderFactory;
-import csvbuilderanalyser.ICSVBuilder;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static censusanalyser.CensusAnalyserException.*;
 
@@ -27,9 +19,9 @@ public class CensusAnalyser {
         this.censusStateMap = new HashMap<>();
     }
 
-    public int loadCensusDataCode(COUNTRY country, String...csvFilePath) throws CensusAnalyserException {
-        Map<String, CensussDAO> censusStateMap = new censusLoader().loadCensusData(country, csvFilePath);
-        return censusStateMap.size();
+    public Map<String, CensussDAO> loadCensusDataCode(COUNTRY country, String...csvFilePath) throws CensusAnalyserException {
+        CommonAdaptar censusObject = CountryFactory.createObject(country);
+        return censusObject.loadCensusData(country,csvFilePath);
     }
 
     public String getStateWiseSortedCensusData() throws CensusAnalyserException {

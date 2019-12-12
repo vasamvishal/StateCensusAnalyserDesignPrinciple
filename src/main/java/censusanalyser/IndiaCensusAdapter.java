@@ -1,5 +1,6 @@
 package censusanalyser;
 
+import censusanalyser.CensusAnalyser.COUNTRY;
 import csvbuilderanalyser.CSVBuilderException;
 import csvbuilderanalyser.CSVBuilderFactory;
 import csvbuilderanalyser.ICSVBuilder;
@@ -13,9 +14,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-public class censusLoader {
-
-    public <E> Map<String, CensussDAO> loadCensusData(Class<E> CensusCSVClass,String ... csvFilePath) throws CensusAnalyserException {
+public class IndiaCensusAdapter{
+    public <E> Map<String, CensussDAO> loadCensusData(Class<E> CensusCSVClass, String ... csvFilePath) throws CensusAnalyserException {
         Map<String, CensussDAO> censusStateMap=new HashMap<>();
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath[0]))) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
@@ -48,15 +48,14 @@ public class censusLoader {
         return censusStateMap;
     }
 
-    public <E> Map<String, CensussDAO> loadCensusData(CensusAnalyser.COUNTRY country, String ... csvFilePath) throws CensusAnalyserException {
-        if(country.equals(CensusAnalyser.COUNTRY.INDIA)){
+    public <E> Map<String, CensussDAO> loadCensusData(COUNTRY country, String ... csvFilePath) throws CensusAnalyserException {
+        if(country.equals(COUNTRY.INDIA)){
             return this.loadCensusData(IndiaCensusCSV.class,csvFilePath);
         }
-        else if (country.equals(CensusAnalyser.COUNTRY.US)){
+        else if (country.equals(COUNTRY.US)){
             return this.loadCensusData(USCensusCsv.class,csvFilePath);
         }
         throw new CensusAnalyserException("Enter proper Country name", CensusAnalyserException.ExceptionType.INCORRECT_COUNTRY);
-
     }
 
     private int loadIndiaStateCode(Map<String, CensussDAO> censusStateMap, String indiaStateCodeFilePath) throws CensusAnalyserException {
@@ -79,5 +78,4 @@ public class censusLoader {
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.HEADER_EXCEPTION);
         }
     }
-
 }

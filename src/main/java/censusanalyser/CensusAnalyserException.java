@@ -5,9 +5,7 @@ public class CensusAnalyserException extends Exception {
    public enum ExceptionType {
         CENSUS_FILE_PROBLEM,UNABLE_TO_PARSE,NO_CENSUS_DATA, HEADER_EXCEPTION;
     }
-    enum Sort{
-       STATE,POPULATION;
-    }
+
 
     public ExceptionType type;
 
@@ -21,8 +19,4 @@ public class CensusAnalyserException extends Exception {
         this.type=ExceptionType.valueOf(name);
     }
 
-    public CensusAnalyserException(String message, ExceptionType type, Throwable cause) {
-        super(message, cause);
-        this.type = type;
-    }
 }

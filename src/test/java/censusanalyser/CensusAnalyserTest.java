@@ -179,6 +179,19 @@ public class CensusAnalyserTest {
     }
 
     @Test
+    public void givenIndianData_WhenSortedOnAreaPerSqKm_ShouldReturnSortedOutput() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser(CensusAnalyser.COUNTRY.INDIA);
+            Map<String, CensussDAO> stringCensussDAOMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, INDIA_CENSUS_CSV_FILE_PATH, INDIA_STATE_CODE_FILE_PATH);
+            String stateWiseSortedCensusData = censusAnalyser.getFieldWiseSortedCensusData(stringCensussDAOMap,FieldsToSort.areaInSqKm);
+            IndiaCensusCSV[] CensusCSV = new Gson().fromJson(stateWiseSortedCensusData, IndiaCensusCSV[].class);
+            Assert.assertEquals("Rajasthan", CensusCSV[0].state);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);
+        }
+    }
+
+    @Test
     public void givenUsCensusData_ShouldReturnCensusData() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();

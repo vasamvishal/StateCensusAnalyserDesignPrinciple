@@ -19,4 +19,13 @@ public class USCensusCsv {
     @CsvBindByName(column = "Population Density",required = true)
     public double PopulationDensity;
 
+    public USCensusCsv() {
+    }
+
+    public USCensusCsv(String state, int population, int populationDensity, double totalArea) {
+        this.State=state;
+        this.Population=population;
+        this.PopulationDensity=populationDensity;
+        this.TotalArea=totalArea;
+    }
 }

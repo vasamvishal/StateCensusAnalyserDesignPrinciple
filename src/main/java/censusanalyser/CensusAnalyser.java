@@ -7,13 +7,26 @@ import java.util.stream.Collectors;
 
 import static censusanalyser.CensusAnalyserException.*;
 
-public class CensusAnalyser {
+public class CensusAnalyser{
 
     public enum COUNTRY {
         INDIA, US
     }
-
+    private COUNTRY country;
     Map<String, CensussDAO> censusStateMap = null;
+    Map<FieldsToSort, Comparator<CensussDAO>> fields = null;
+
+    public CensusAnalyser(COUNTRY country) {
+        this.country = country;
+        this.fields = new HashMap();
+        this.fields.put(FieldsToSort.state, Comparator.comparing(census -> census.state));
+        this.fields.put(FieldsToSort.population, Comparator.comparing(census ->
+                census.population, Comparator.reverseOrder()));
+        this.fields.put(FieldsToSort.areaInSqKm, Comparator.comparing(census ->
+                census.TotalArea, Comparator.reverseOrder()));
+        this.fields.put(FieldsToSort.densityPerSqKm, Comparator.comparing(census ->
+                census.PopulationDensity, Comparator.reverseOrder()));
+    }
 
     public CensusAnalyser() {
         this.censusStateMap = new HashMap<>();
@@ -25,41 +38,18 @@ public class CensusAnalyser {
         return censusStateMap;
     }
 
-    public String getStateWiseSortedCensusData(Map<String, CensussDAO> censusStateMap) throws CensusAnalyserException {
-        if (censusStateMap.size() == 0 || censusStateMap == null) {
-            throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
-        }
-        Comparator<CensussDAO> censusCSVComparator = Comparator.comparing(census -> census.state);
-        List<CensussDAO> censussDAOS = censusStateMap.values().stream().collect(Collectors.toList());
-        List<CensussDAO> censussDAOS1 = this.sort(censussDAOS, censusCSVComparator);
-        String sortedStateData = new Gson().toJson(censussDAOS1);
-        return sortedStateData;
-    }
-
-    public String getStateWisePopulationforSortedCensusData(Map<String, CensussDAO> censusStateMap) throws CensusAnalyserException {
-        this.censusStateMap = censusStateMap;
+    public String getFieldWiseSortedCensusData(Map<String, CensussDAO> censusStateMap, FieldsToSort fieldsToSort) throws CensusAnalyserException {
+        this.censusStateMap=censusStateMap;
         if (this.censusStateMap.size() == 0 || this.censusStateMap == null) {
             throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
         }
-        Comparator<CensussDAO> censusCSVComparator = Comparator.comparing(census -> census.population, Comparator.reverseOrder());
-        List<CensussDAO> censussDAOS = this.censusStateMap.values().stream().collect(Collectors.toList());
-        List<CensussDAO> censussDAOS1 = this.sort(censussDAOS, censusCSVComparator);
-        String sortedStateData = new Gson().toJson(censussDAOS1);
+        Comparator<CensussDAO> censussDAOComparator = this.fields.get(fieldsToSort);
+        ArrayList arrayList=censusStateMap.values().stream().
+                                sorted(censussDAOComparator).
+                                map(cencussDao -> cencussDao.getCencusDTO(country))
+                                .collect(Collectors.toCollection(ArrayList::new));
+        String sortedStateData = new Gson().toJson(arrayList);
         return sortedStateData;
-    }
-
-    private List<CensussDAO> sort(List<CensussDAO> censussDAOS, Comparator<CensussDAO> censusCSVComparator) {
-        for (int i = 0; i < censussDAOS.size() - 1; i++) {
-            for (int j = 0; j < censussDAOS.size() - i - 1; j++) {
-                CensussDAO census1 = censussDAOS.get(j);
-                CensussDAO census2 = censussDAOS.get(j + 1);
-                if (censusCSVComparator.compare(census1, census2) > 0) {
-                    censussDAOS.set(j, census2);
-                    censussDAOS.set(j + 1, census1);
-                }
-            }
-        }
-        return censussDAOS;
     }
 }
 

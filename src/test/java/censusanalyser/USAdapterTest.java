@@ -55,4 +55,14 @@ public class USAdapterTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
         }
     }
+    @Test
+    public void givenTwoUsfile_ShouldReturnException() {
+        try {
+            USCensusAdaptor usCensusAdaptor = new USCensusAdaptor();
+            Map<String, CensussDAO> censusData = usCensusAdaptor.loadCensusData(CensusAnalyser.COUNTRY.US, US_CENSUS_FILE_PATH, INDIA_STATE_CODE_FILE_PATH);
+            Assert.assertEquals(51, censusData.size());
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.ARRAY_OUT_OF_BOUND, e.type);
+        }
+    }
 }

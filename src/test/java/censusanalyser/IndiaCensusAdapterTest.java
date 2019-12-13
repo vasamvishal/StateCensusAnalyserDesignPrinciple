@@ -55,5 +55,15 @@ public class IndiaCensusAdapterTest {
         }
     }
 
+    @Test
+    public void givenCSVFileInReverse_ShouldThrow_Exception() {
+        try {
+            IndiaAdaptorSensor indiaAdaptorSensor = new IndiaAdaptorSensor();
+            Map<String, CensussDAO> censusData = indiaAdaptorSensor.loadCensusData(CensusAnalyser.COUNTRY.INDIA,INDIA_STATE_CODE_FILE_PATH,INDIA_CENSUS_CSV_FILE_PATH);
+            Assert.assertEquals(29, censusData.size());
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
+        }
+    }
 }
 

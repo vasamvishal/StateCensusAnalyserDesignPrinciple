@@ -34,4 +34,15 @@ public class USAdapterTest {
            Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA,e.type);
         }
     }
+
+    @Test
+    public void givenWrongDelimiterUsfile_ShouldReturnException() {
+        try {
+            USCensusAdaptor usCensusAdaptor = new USCensusAdaptor();
+            Map<String, CensussDAO> censusData = usCensusAdaptor.loadCensusData(CensusAnalyser.COUNTRY.US, US_DELIMITER_FILE_PATH);
+            Assert.assertEquals(51, censusData.size());
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
+        }
+    }
 }

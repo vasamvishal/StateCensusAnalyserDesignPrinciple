@@ -36,7 +36,7 @@ public class IndiaCensusAdapterTest {
     @Test
     public void givenWrongDelimiterFile_ShouldThrow_Exception() {
         try {
-            IndiaAdaptorSensor indiaAdaptorSensor = new IndiaAdaptorSensor();
+            IndiaAdaptorSensor indiaAdaptorSensor =new IndiaAdaptorSensor();
             Map<String, CensussDAO> censusData = indiaAdaptorSensor.loadCensusData(CensusAnalyser.COUNTRY.INDIA,INDIANCENSUSDATA_DELIMITER_FILE_PATH);
             Assert.assertEquals(29, censusData.size());
         } catch (CensusAnalyserException e) {
@@ -51,7 +51,7 @@ public class IndiaCensusAdapterTest {
             Map<String, CensussDAO> censusData = indiaAdaptorSensor.loadCensusData(CensusAnalyser.COUNTRY.INDIA,INDIA_CENSUS_CSV_FILE_PATH);
             Assert.assertEquals(29, censusData.size());
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.ARRAY_OUT_OF_BOUND,e.type);
         }
     }
 

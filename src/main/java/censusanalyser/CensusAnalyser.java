@@ -21,10 +21,11 @@ public class CensusAnalyser {
 
     public Map<String, CensussDAO> loadCensusDataCode(COUNTRY country, String...csvFilePath) throws CensusAnalyserException {
         CommonAdaptar censusObject = CountryFactory.createObject(country);
-        return censusObject.loadCensusData(country,csvFilePath);
+        Map<String, CensussDAO> censusStateMap = censusObject.loadCensusData(country, csvFilePath);
+        return censusStateMap;
     }
 
-    public String getStateWiseSortedCensusData() throws CensusAnalyserException {
+    public String getStateWiseSortedCensusData(Map<String, CensussDAO> censusStateMap) throws CensusAnalyserException {
         if (censusStateMap.size() == 0 || censusStateMap == null) {
             throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
         }
@@ -35,12 +36,13 @@ public class CensusAnalyser {
         return sortedStateData;
     }
 
-    public String getStateWisePopulationforSortedCensusData() throws CensusAnalyserException {
-        if (censusStateMap.size() == 0 || censusStateMap == null) {
+    public String getStateWisePopulationforSortedCensusData(Map<String, CensussDAO> censusStateMap) throws CensusAnalyserException {
+        this.censusStateMap=censusStateMap;
+        if (this.censusStateMap.size() == 0 || this.censusStateMap == null) {
             throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
         }
         Comparator<CensussDAO> censusCSVComparator = Comparator.comparing(census -> census.population, Comparator.reverseOrder());
-        List<CensussDAO> censussDAOS = censusStateMap.values().stream().collect(Collectors.toList());
+        List<CensussDAO> censussDAOS = this.censusStateMap.values().stream().collect(Collectors.toList());
         List<CensussDAO> censussDAOS1 = this.sort(censussDAOS, censusCSVComparator);
         String sortedStateData = new Gson().toJson(censussDAOS1);
         return sortedStateData;

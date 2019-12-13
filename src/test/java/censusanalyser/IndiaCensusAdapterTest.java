@@ -11,7 +11,7 @@ public class IndiaCensusAdapterTest {
     private static final String INDIANCENSUSDATA_DELIMITER_FILE_PATH = "/home/user/vishalVasam/CensusAnalyser/src/test/resources/WrongIndiaStateCensusData.csv";
     private static final String INDIANSTATE_WRONG_CSV_FILE_PATH = "./src/main/resources/IndiaStateCode.csv";
     private static final String _INDIAN_STATE_CODE_DELIMITER_FILE_PATH = "/home/user/vishalVasam/CensusAnalyser/src/test/resources/WrongIndiaStateCensusData.csv";
-    private static final String US_CENSUS_FILE_PATH = "/home/user/vishalVasam/CensusAnalyser/src/test/resources/USCensusData.csv";
+
     @Test
     public void givenCSVFile_ShouldGive_SizeOfHashMap() {
         try {
@@ -27,6 +27,17 @@ public class IndiaCensusAdapterTest {
         try {
             IndiaAdaptorSensor indiaAdaptorSensor = new IndiaAdaptorSensor();
             Map<String, CensussDAO> censusData = indiaAdaptorSensor.loadCensusData(CensusAnalyser.COUNTRY.INDIA,INDIA_STATE_CODE_FILE_PATH);
+            Assert.assertEquals(29, censusData.size());
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);
+        }
+    }
+
+    @Test
+    public void givenWrongDelimiterFile_ShouldThrow_Exception() {
+        try {
+            IndiaAdaptorSensor indiaAdaptorSensor = new IndiaAdaptorSensor();
+            Map<String, CensussDAO> censusData = indiaAdaptorSensor.loadCensusData(CensusAnalyser.COUNTRY.INDIA,INDIANCENSUSDATA_DELIMITER_FILE_PATH);
             Assert.assertEquals(29, censusData.size());
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION,e.type);

@@ -34,7 +34,7 @@ public abstract class CommonAdaptar {
                         .map(USCensusCsv.class::cast)
                         .forEach(censusCsv -> censusStateMap.put(censusCsv.State, new CensussDAO(censusCsv)));
             }
-            if (csvFilePath.length == 1) return censusStateMap;
+            if (csvFilePath.length == 1)
             {
                 this.loadIndiaStateCode(censusStateMap, csvFilePath[1]);
             }

@@ -10,8 +10,6 @@ public class USAdapterTest {
     private static final String WRONG_CSV_FILE_PATH = "./src/main/resources/IndiaState/CensusData.csv";
     private static final String US_DELIMITER_FILE_PATH = "/home/user/vishalVasam/CensusAnalyser/src/test/resources/UScensusDataDelimiter.csv";
     private static final String INDIA_STATE_CODE_FILE_PATH = "/home/user/vishalVasam/CensusAnalyser/src/test/resources/IndiaStateCode.csv";
-    private static final String INDIANSTATE_WRONG_CSV_FILE_PATH = "./src/main/resources/IndiaStateCode.csv";
-    private static final String _INDIAN_STATE_CODE_DELIMITER_FILE_PATH = "/home/user/vishalVasam/CensusAnalyser/src/test/resources/WrongIndiaStateCensusData.csv";
 
     @Test
     public void givenUsfile_ShouldReturnHashmapSize() {

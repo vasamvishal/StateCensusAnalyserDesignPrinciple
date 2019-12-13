@@ -15,10 +15,10 @@ import java.util.stream.StreamSupport;
 
 public abstract class CommonAdaptar {
 
+    public abstract <E> Map<String, CensussDAO> loadCensusData(CensusAnalyser.COUNTRY country, String... csvFilePath) throws CensusAnalyserException;
 
-    public abstract  <E> Map<String, CensussDAO> loadCensusData(CensusAnalyser.COUNTRY country, String ... csvFilePath) throws CensusAnalyserException ;
-    public  <E> Map<String, CensussDAO> loadCensusData(Class<E> CensusCSVClass, String ... csvFilePath) throws CensusAnalyserException {
-        Map<String, CensussDAO> censusStateMap=new HashMap<>();
+    public <E> Map<String, CensussDAO> loadCensusData(Class<E> CensusCSVClass, String... csvFilePath) throws CensusAnalyserException {
+        Map<String, CensussDAO> censusStateMap = new HashMap<>();
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath[0]))) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<E> censusCsvIterator = csvBuilder.
@@ -34,9 +34,9 @@ public abstract class CommonAdaptar {
                         .map(USCensusCsv.class::cast)
                         .forEach(censusCsv -> censusStateMap.put(censusCsv.State, new CensussDAO(censusCsv)));
             }
-            if(csvFilePath.length == 1)return censusStateMap;
+            if (csvFilePath.length == 1) return censusStateMap;
             {
-                this.loadIndiaStateCode(censusStateMap,csvFilePath[1]);
+                this.loadIndiaStateCode(censusStateMap, csvFilePath[1]);
             }
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),

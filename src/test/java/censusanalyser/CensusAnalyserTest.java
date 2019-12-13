@@ -34,7 +34,7 @@ public class CensusAnalyserTest {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
-            censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA,WRONG_CSV_FILE_PATH);
+            censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, WRONG_CSV_FILE_PATH);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         }
@@ -175,6 +175,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);
         }
     }
+
     @Test
     public void givenEnumCountry_ShouldReturnHashMapSize() {
         try {

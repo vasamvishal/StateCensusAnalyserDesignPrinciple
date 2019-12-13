@@ -2,11 +2,10 @@ package censusanalyser;
 
 public class CensusAnalyserException extends Exception {
 
-   public enum ExceptionType {
-        CENSUS_FILE_PROBLEM,UNABLE_TO_PARSE,NO_CENSUS_DATA, HEADER_EXCEPTION,
-       INCORRECT_COUNTRY
-   }
-
+    public enum ExceptionType {
+        CENSUS_FILE_PROBLEM, UNABLE_TO_PARSE, NO_CENSUS_DATA, HEADER_EXCEPTION,
+        INVALID_COUNTRY;
+    }
 
     public ExceptionType type;
 
@@ -17,7 +16,7 @@ public class CensusAnalyserException extends Exception {
 
     public CensusAnalyserException(String message, String name) {
         super(message);
-        this.type=ExceptionType.valueOf(name);
+        this.type = ExceptionType.valueOf(name);
     }
 
 }

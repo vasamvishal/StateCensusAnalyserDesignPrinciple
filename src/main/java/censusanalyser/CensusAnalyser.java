@@ -9,17 +9,17 @@ import static censusanalyser.CensusAnalyserException.*;
 
 public class CensusAnalyser {
 
-    public enum COUNTRY{
-        INDIA,US
+    public enum COUNTRY {
+        INDIA, US
     }
-    Map<String, CensussDAO> censusStateMap = null;
 
+    Map<String, CensussDAO> censusStateMap = null;
 
     public CensusAnalyser() {
         this.censusStateMap = new HashMap<>();
     }
 
-    public Map<String, CensussDAO> loadCensusDataCode(COUNTRY country, String...csvFilePath) throws CensusAnalyserException {
+    public Map<String, CensussDAO> loadCensusDataCode(COUNTRY country, String... csvFilePath) throws CensusAnalyserException {
         CommonAdaptar censusObject = CountryFactory.createObject(country);
         Map<String, CensussDAO> censusStateMap = censusObject.loadCensusData(country, csvFilePath);
         return censusStateMap;
@@ -37,7 +37,7 @@ public class CensusAnalyser {
     }
 
     public String getStateWisePopulationforSortedCensusData(Map<String, CensussDAO> censusStateMap) throws CensusAnalyserException {
-        this.censusStateMap=censusStateMap;
+        this.censusStateMap = censusStateMap;
         if (this.censusStateMap.size() == 0 || this.censusStateMap == null) {
             throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
         }

@@ -110,7 +110,7 @@ public class CensusAnalyserTest {
     public void givenIndianStateCode_ForWrongClass_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            Map<String, CensussDAO> stringCensussDAOMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, INDIA_CENSUS_CSV_FILE_PATH);
+            Map<String, CensussDAO> stringCensussDAOMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, INDIA_STATE_CODE_FILE_PATH);
             Assert.assertEquals(37, stringCensussDAOMap);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_EXCEPTION, e.type);
@@ -156,7 +156,7 @@ public class CensusAnalyserTest {
     public void givenIndianData_WhenSortedOnPopulation_ShouldReturnSortedOutput() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            Map<String, CensussDAO> censusStateMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, INDIA_CENSUS_CSV_FILE_PATH);
+            Map<String, CensussDAO> censusStateMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, INDIA_CENSUS_CSV_FILE_PATH,INDIA_STATE_CODE_FILE_PATH);
             String stateWiseSortedCensusData = censusAnalyser.getStateWisePopulationforSortedCensusData(censusStateMap);
             IndiaCensusCSV[] CensusCSV = new Gson().fromJson(stateWiseSortedCensusData, IndiaCensusCSV[].class);
             Assert.assertEquals("Uttar Pradesh", CensusCSV[0].state);
@@ -170,7 +170,7 @@ public class CensusAnalyserTest {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             Map<String, CensussDAO> stringCensussDAOMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.US, US_CENSUS_FILE_PATH);
-            Assert.assertEquals(51, stringCensussDAOMap);
+            Assert.assertEquals(51, stringCensussDAOMap.size());
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);
         }

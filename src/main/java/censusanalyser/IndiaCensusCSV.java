@@ -21,8 +21,8 @@ public class IndiaCensusCSV {
 
     public IndiaCensusCSV(String state, int population, int populationDensity, int totalArea) {
     this.state=state;
-    this.areaInSqKm=populationDensity;
-    this.densityPerSqKm=totalArea;
+    this.areaInSqKm=totalArea;
+    this.densityPerSqKm=populationDensity;
     this.population=population;
     }
 

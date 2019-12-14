@@ -40,28 +40,19 @@ public class CensusAnalyser {
         return censusStateMap;
     }
 
-    public String getFieldWiseSortedCensusData(Map<String, CensussDAO> censusStateMap, FieldsToSort fieldsToSort) throws CensusAnalyserException {
+    public String getFieldWiseSortedCensusData(Map<String, CensussDAO> censusStateMap, FieldsToSort ... fieldsToSort) throws CensusAnalyserException {
         this.censusStateMap = censusStateMap;
+        Comparator<CensussDAO> censussDAOComparator = null;
         if (this.censusStateMap.size() == 0 || this.censusStateMap == null) {
             throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
         }
-        Comparator<CensussDAO> censussDAOComparator = this.fields.get(fieldsToSort);
-        List arrayList = censusStateMap.values().stream().
-                sorted(censussDAOComparator).
-                map(cencussDao -> cencussDao.getCencusDTO(country))
-                .collect(Collectors.toCollection(ArrayList::new));
+        if (fieldsToSort.length == 1) {
+            censussDAOComparator = this.fields.get(fieldsToSort[0]);
 
-        String sortedStateData = new Gson().toJson(arrayList);
-        return sortedStateData;
-    }
-
-    public String getFieldWiseSortedCensusDataUsingTwoFields(Map<String, CensussDAO> censusStateMap, FieldsToSort fieldsToSort,FieldsToSort fieldsToSort1) throws CensusAnalyserException {
-        this.censusStateMap = censusStateMap;
-        if (this.censusStateMap.size() == 0 || this.censusStateMap == null) {
-            throw new CensusAnalyserException("List is Empty", ExceptionType.NO_CENSUS_DATA);
+        } else if (fieldsToSort.length == 2) {
+           censussDAOComparator = this.fields.get(fieldsToSort[0])
+                    .thenComparing(this.fields.get(fieldsToSort[1]));
         }
-        Comparator<CensussDAO> censussDAOComparator = this.fields.get(fieldsToSort)
-                .thenComparing(this.fields.get(fieldsToSort1));
         List arrayList = censusStateMap.values().stream().
                 sorted(censussDAOComparator).
                 map(cencussDao -> cencussDao.getCencusDTO(country))
@@ -69,7 +60,6 @@ public class CensusAnalyser {
         String sortedStateData = new Gson().toJson(arrayList);
         return sortedStateData;
     }
+    }
 
-
-}
 

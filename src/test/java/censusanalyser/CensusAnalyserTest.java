@@ -196,9 +196,9 @@ public class CensusAnalyserTest {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser(CensusAnalyser.COUNTRY.INDIA);
             Map<String, CensussDAO> stringCensussDAOMap = censusAnalyser.loadCensusDataCode(CensusAnalyser.COUNTRY.INDIA, INDIA_CENSUS_CSV_FILE_PATH, INDIA_STATE_CODE_FILE_PATH);
-            String stateWiseSortedCensusData = censusAnalyser.getFieldWiseSortedCensusDataUsingTwoFields(stringCensussDAOMap,FieldsToSort.population,FieldsToSort.densityPerSqKm );
+            String stateWiseSortedCensusData = censusAnalyser.getFieldWiseSortedCensusData(stringCensussDAOMap,FieldsToSort.population,FieldsToSort.areaInSqKm );
             IndiaCensusCSV[] CensusCSV = new Gson().fromJson(stateWiseSortedCensusData, IndiaCensusCSV[].class);
-            Assert.assertEquals("Rajasthan", CensusCSV[0].state);
+            Assert.assertEquals("Uttar Pradesh", CensusCSV[0].state);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.NO_CENSUS_DATA, e.type);
         }
